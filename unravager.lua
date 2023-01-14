@@ -1,3 +1,5 @@
+getgenv().SuccesfullyLoaded = false
+
 -- Bypasses
 
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
@@ -78,7 +80,13 @@ c:GetPropertyChangedSignal("Parent"):Connect(function()
     end
 end)
 
-local clone, destroy, getchildren, getdescendants, isa = c.Clone, c.Destroy, c.GetChildren, c.GetDescendants, c.IsA
+local clone, destroy, getchildren, getdescendants, isa = c.Clone, c.Destroy, c.GetChildren, c.GetDescendants, function(inst, class)
+    if inst:IsA(class) then
+        return true
+    else
+        return false
+    end
+end
 
 local function gp(parent, name, className)
     if typeof(parent) == "Instance" then
@@ -769,7 +777,6 @@ getgenv().flingpart1 = gp(c, flingpart, "BasePart") or gp(gp(c, flingpart, "Acce
 getgenv().fling = function() end
 if getgenv().flingpart0 and getgenv().flingpart1 then
     getgenv().SuccesfullyLoaded = true
-	
     getgenv().flingpart0:GetPropertyChangedSignal("Parent"):Connect(function()
         if not (getgenv().flingpart0 and getgenv().flingpart0.Parent) then
             getgenv().flingpart0 = nil
@@ -906,5 +913,5 @@ if getgenv().flingpart0 and getgenv().flingpart1 then
     end
 end
 
--- lp:GetMouse().Move:Connect(getgenv().fling) --click fling
+lp:GetMouse().Move:Connect(getgenv().fling) --click fling
 -- print("loaded check")
