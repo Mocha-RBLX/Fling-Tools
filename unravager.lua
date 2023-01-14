@@ -913,5 +913,9 @@ if getgenv().flingpart0 and getgenv().flingpart1 then
     end
 end
 
-lp:GetMouse().Move:Connect(getgenv().fling) --click fling
+lp:GetMouse().Move:Connect(function()
+    if not getgenv().Cheesing then
+        getgenv().fling()
+    end
+end) 
 -- print("loaded check")
