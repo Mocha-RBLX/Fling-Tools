@@ -769,7 +769,6 @@ getgenv().flingpart1 = gp(c, flingpart, "BasePart") or gp(gp(c, flingpart, "Acce
 getgenv().fling = function() end
 if getgenv().flingpart0 and getgenv().flingpart1 then
     getgenv().SuccesfullyLoaded = true
-	
     getgenv().flingpart0:GetPropertyChangedSignal("Parent"):Connect(function()
         if not (getgenv().flingpart0 and getgenv().flingpart0.Parent) then
             getgenv().flingpart0 = nil
