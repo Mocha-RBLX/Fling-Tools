@@ -1,3 +1,4 @@
+getgenv().SuccesfullyLoaded = false
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 
 if string.match(GameName, "Hood") then
@@ -72,7 +73,13 @@ c:GetPropertyChangedSignal("Parent"):Connect(function()
     end
 end)
 
-local clone, destroy, getchildren, getdescendants, isa = c.Clone, c.Destroy, c.GetChildren, c.GetDescendants, c.IsA
+local clone, destroy, getchildren, getdescendants, isa = c.Clone, c.Destroy, c.GetChildren, c.GetDescendants, function(inst, class)
+    if inst:IsA(class) then
+        return true
+    else
+        return false
+    end
+end
 
 local function gp(parent, name, className)
     if typeof(parent) == "Instance" then
@@ -213,10 +220,10 @@ local function align(Part0, Part1)
     
     att1:GetPropertyChangedSignal("Parent"):Connect(function()
         Part1 = att1.Parent
-        if not isa(Part1, "BasePart") then
-            att1 = nil
-            Part1 = nil
-        end
+        -- if not isa(Part1, "BasePart") then
+        --     att1 = nil
+        --     Part1 = nil
+        -- end
     end)
     att1.Parent = Part1
 end
